@@ -38,8 +38,9 @@ def load_backends():
             )
         # add the backend label and an instantiated backend class to the
         # backends list.
-        backend_instance = getattr(mod, backend_class)(medium_id, spam_sensitivity)
-        backends.append(((medium_id, label), backend_instance))
+        backend_instance = getattr(mod, backend_class)(label, spam_sensitivity)
+        backends.append(((label, label), backend_instance))
+
     return dict(backends)
 
 
@@ -49,5 +50,5 @@ def load_media_defaults(backends):
     for key, backend in backends.items():
         # key is a tuple (medium_id, backend_label)
         media.append(key)
-        defaults[key[0]] = backend.spam_sensitivity
+        defaults[key[1]] = backend.spam_sensitivity
     return media, defaults
